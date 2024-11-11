@@ -11,14 +11,14 @@ function App() {
       element: <UserTable />,
     },
     {
-      path: "/AddUser",
+      path: "/add-user",
       element: <AddUser />,
     },
   ]);
 
   return (
     <UserProvider>
-      <div className="App">
+      <div className="app-container">
         <RouterProvider router={router} />
       </div>
     </UserProvider>

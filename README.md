@@ -1,3 +1,8 @@
+# About Project
+
+It is a user managment Dashboard with basic CRUDE operations using 'https://jsonplaceholder.typicode.com/users' API
+Also has a search function to find users
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
