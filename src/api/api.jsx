@@ -1,15 +1,15 @@
-// Import any dependencies needed for API calls here if necessary
-
+//ALL API FUNCTIONS DEFINED HERE 
+//Handles get for showing table data 
 export const fetchUsers = () => {
     return fetch('https://jsonplaceholder.typicode.com/users')
       .then((response) => response.json())
       .catch((error) => console.error('Error fetching data:', error));
   };
-  
+  //Used to pass U ID for editing
   export const handleEdit = (id, setIsEditing) => {
     setIsEditing(id);
   };
-  
+  //Sending PUT request for saving data once confirmed by user
   export const handleSave = (id, updatedUser, users, setUsers, setIsEditing) => {
     return fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
       method: 'PUT',
@@ -26,7 +26,7 @@ export const fetchUsers = () => {
       })
       .catch((error) => console.error('Error editing user:', error));
   };
-  
+  //Delete user API CALL
   export const handleDelete = (id, users, setUsers) => {
     return fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
       method: 'DELETE',
@@ -39,8 +39,8 @@ export const fetchUsers = () => {
       })
       .catch((error) => console.error('Error deleting user:', error));
   };
-  
-  export const handleAdd = (newUser, users, setUsers, setNewUser) => {
+  //Add user POST API CALL
+  export const handleAdd = (newUser, users, setUsers, setNewUser,Navigate) => {
     return fetch('https://jsonplaceholder.typicode.com/users', {
       method: 'POST',
       body: JSON.stringify(newUser),
@@ -53,7 +53,13 @@ export const fetchUsers = () => {
         setUsers([...users, { id: data.id, ...newUser }]);
         setNewUser({ name: '', username: '', email: '' });
         console.log('Add response:', data);
+        alert('employee Added')
+        Navigate('/')
+
       })
-      .catch((error) => console.error('Error adding user:', error));
+      .catch((error) => {console.error('Error adding user:', error)
+        alert('employee Not Added Error')
+
+      });
   };
   

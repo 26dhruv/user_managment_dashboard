@@ -5,6 +5,7 @@ import {
   
 } from "react-router-dom";
 import { UserTable } from './components/user_table';
+import { AddUser } from './components/add_user';
 function App() {
   const router = createBrowserRouter([
     {
@@ -15,8 +16,8 @@ function App() {
       ),
     },
     {
-      path: "/Edit/:id",
-      element: <div>About</div>,
+      path: "/AddUser",
+      element: <AddUser/>,
     },
   ]);
   return (
