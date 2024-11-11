@@ -8,14 +8,20 @@ import { Form } from 'react-bootstrap';
 export function UserTable() {
   const { users, setUsers } = useUsers();  // Get global state and setter function
   const [isEditing, setIsEditing] = useState(null);
-
+  const [query,setQuery]=useState('')
   return (
     <>
+    {/* search Bar */}
+    <form className="form-inline my-2 my-lg-0">
+        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onChange={(e)=>{setQuery(e.target.value)}}></input>
+        <button className="btn btn-outline-success my-2 my-sm-0" type="submit"  >Search</button>
+      </form>
       <Link to='/AddUser'>
         <Button variant="primary" style={{ marginBottom: '10px' }}>
           Add User
         </Button>
       </Link>
+      
       <Table bordered hover border={3}>
         <thead>
           <tr>
@@ -27,7 +33,7 @@ export function UserTable() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {users.filter(user => user.name.includes(query)).map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>
