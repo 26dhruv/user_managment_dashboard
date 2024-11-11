@@ -1,0 +1,32 @@
+<Form>
+<Form.Group>
+  <Form.Label>Name</Form.Label>
+  <Form.Control
+    type="text"
+    name="name"
+    value={newUser.name}
+    onChange={handleInputChange}
+  />
+</Form.Group>
+<Form.Group>
+  <Form.Label>Username</Form.Label>
+  <Form.Control
+    type="text"
+    name="username"
+    value={newUser.username}
+    onChange={handleInputChange}
+  />
+</Form.Group>
+<Form.Group>
+  <Form.Label>Email</Form.Label>
+  <Form.Control
+    type="text"
+    name="email"
+    value={newUser.email}
+    onChange={handleInputChange}
+  />
+</Form.Group>
+<Button variant="primary" onClick={handleAdd} style={{ marginTop: '10px' }}>
+  Add
+</Button>
+</Form>
