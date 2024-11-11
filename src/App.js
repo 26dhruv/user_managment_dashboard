@@ -1,29 +1,27 @@
 import './App.css';
-import {
-  createBrowserRouter,
-  RouterProvider,
-  
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { UserProvider } from './api/usercontext';  // Import the UserProvider
 import { UserTable } from './components/user_table';
 import { AddUser } from './components/add_user';
+
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-       
-          <UserTable />
-      ),
+      element: <UserTable />,
     },
     {
       path: "/AddUser",
-      element: <AddUser/>,
+      element: <AddUser />,
     },
   ]);
+
   return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
+    <UserProvider>
+      <div className="App">
+        <RouterProvider router={router} />
+      </div>
+    </UserProvider>
   );
 }
 

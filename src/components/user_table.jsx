@@ -1,29 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { fetchUsers, handleEdit, handleSave, handleDelete } from '../api/api.jsx';
 import { Link } from 'react-router-dom';
-
+import { useUsers } from '../api/usercontext';  // Import the Context custom hook
+import { handleDelete, handleEdit, handleSave } from '../api/api';  // Import API functions
+import { Form } from 'react-bootstrap';
 export function UserTable() {
-  //State declarations
-  const [users, setUsers] = useState([]);
+  const { users, setUsers } = useUsers();  // Get global state and setter function
   const [isEditing, setIsEditing] = useState(null);
-//When component mounts users are fetched 
-  useEffect(() => {
-    fetchUsers().then(setUsers);
-  }, []);
-
-  
 
   return (
     <>
       <Link to='/AddUser'>
-      <Button variant="primary" style={{ marginBottom: '10px' }}>
-        Add User
-      </Button>
+        <Button variant="primary" style={{ marginBottom: '10px' }}>
+          Add User
+        </Button>
       </Link>
-      <Table  bordered hover border={3}>
+      <Table bordered hover border={3}>
         <thead>
           <tr>
             <th>#</th>
@@ -38,16 +31,15 @@ export function UserTable() {
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>
-                {
-                //Logic for displaying text box for editing content
-
+                
+                {//Control swtich to editing and displaying text box
                 isEditing === user.id ? (
                   <Form.Control
                     type="text"
                     value={user.name}
                     onChange={(e) =>
                       setUsers(users.map((u) =>
-                        u.id === user.id ? { ...u, name: e.target.value } : u//updating local copy object with repsect to uid for name
+                        u.id === user.id ? { ...u, name: e.target.value } : u  
                       ))
                     }
                   />
@@ -62,7 +54,7 @@ export function UserTable() {
                     value={user.username}
                     onChange={(e) =>
                       setUsers(users.map((u) =>
-                        u.id === user.id ? { ...u, username: e.target.value } : u 
+                        u.id === user.id ? { ...u, username: e.target.value } : u
                       ))
                     }
                   />
@@ -86,10 +78,8 @@ export function UserTable() {
                 )}
               </td>
               <td>
-                
-                {
-                isEditing === user.id ? (
-                  <Button variant="outline-success" onClick={() => handleSave(user.id, user, users, setUsers, setIsEditing )}>
+                {isEditing === user.id ? (
+                  <Button variant="outline-success" onClick={() => handleSave(user.id, user, users, setUsers, setIsEditing)}>
                     Save
                   </Button>
                 ) : (
@@ -106,8 +96,6 @@ export function UserTable() {
           ))}
         </tbody>
       </Table>
-
-     
     </>
   );
 }
