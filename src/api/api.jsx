@@ -1,9 +1,11 @@
+import axios from "axios";
+
 // ALL API FUNCTIONS DEFINED HERE 
 
 // Handles GET request for showing table data 
 export const fetchUsers = () => {
-  return fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
+  return axios.get('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.data)
       .catch((error) => console.error('Error fetching data:', error));
 };
 
@@ -14,18 +16,15 @@ export const handleEdit = (id, setIsEditing) => {
 
 // Sends PUT request to save data once confirmed by the user
 export const handleSave = (id, updatedUser, users, setUsers, setIsEditing) => {
-  return fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(updatedUser),
+  return axios.put(`https://jsonplaceholder.typicode.com/users/${id}`, updatedUser, {
       headers: {
           'Content-type': 'application/json; charset=UTF-8',
       },
   })
-      .then((response) => response.json())
-      .then((data) => {
-          setUsers(users.map((user) => (user.id === id ? data : user)));
+      .then((response) => {
+          setUsers(users.map((user) => (user.id === id ? response.data : user)));
           setIsEditing(null);
-          console.log('Edit response:', data);
+          console.log('Edit response:', response.data);
       })
       .catch((error) => console.error('Error editing user:', error));
 };
@@ -34,37 +33,30 @@ export const handleSave = (id, updatedUser, users, setUsers, setIsEditing) => {
 export const handleDelete = (id, users, setUsers) => {
   const user = users.find((user) => user.id === id);
   const warning = `Are you sure you want to delete ${user ? user.name : 'this user'}? \nEither Continue or Cancel.`;
-  
-  if (window.confirm(warning) === true) {//asking for confirmation before deletion
-      return fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-          method: 'DELETE',
-      })
-          .then((response) => {
-              if (response.ok) {
-                  setUsers(users.filter((user) => user.id !== id));
-                  console.log(`User with ID ${id} deleted successfully.`);
-              }
+
+  if (window.confirm(warning)) { // asking for confirmation before deletion
+      return axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+          .then(() => {
+              setUsers(users.filter((user) => user.id !== id));
+              alert(`User ${user.name} deleted successfully.`);
           })
           .catch((error) => console.error('Error deleting user:', error));
   } else {
-      return console.log("Deletion Cancelled by User");
+      console.log("Deletion Cancelled by User");
   }
 };
 
 // Sends POST request to add a new user
 export const handleAdd = (newUser, users, setUsers, setNewUser, Navigate) => {
-  return fetch('https://jsonplaceholder.typicode.com/users', {
-      method: 'POST',
-      body: JSON.stringify(newUser),
+  return axios.post('https://jsonplaceholder.typicode.com/users', newUser, {
       headers: {
           'Content-type': 'application/json; charset=UTF-8',
       },
   })
-      .then((response) => response.json())
-      .then((data) => {
-          setUsers([...users, { id: data.id, ...newUser }]);
+      .then((response) => {
+          setUsers([...users, { id: response.data.id, ...newUser }]);
           setNewUser({ name: '', username: '', email: '' });
-          console.log('Add response:', data);
+          console.log('Add response:', response.data);
           alert('Employee Added');
           Navigate('/');
       })
