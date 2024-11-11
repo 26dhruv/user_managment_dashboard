@@ -21,6 +21,7 @@ export const handleSave = (id, updatedUser, users, setUsers, setIsEditing) => {
       setUsers(users.map((user) => (user.id === id ? response.data : user)));
       setIsEditing(null);
       console.log('Edit response:', response.data);
+      alert('User Edited')
     })
     .catch((error) => console.error('Error editing user:', error));
 };
@@ -48,6 +49,7 @@ export const handleAdd = (newUser, users, setUsers, setNewUser, navigate) => {
     .then((response) => {
       setUsers((prevUsers) => [...prevUsers, response.data]);
       setNewUser({ name: '', username: '', email: '' });
+      alert('User added')
       navigate('/');
     })
     .catch((error) => console.error('Error adding user:', error));
