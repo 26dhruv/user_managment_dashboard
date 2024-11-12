@@ -41,7 +41,7 @@ const handleEdit = (id, setIsEditing) => {
 
 export default function UserTable({children})
 {
-  const {query,setQuery}=useQuery()
+  const {query}=useQuery()
   const { users, setUsers } = useUsers();  // Get global state and setter function
   const [isEditing, setIsEditing] = useState(null);
   return(

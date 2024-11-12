@@ -2,7 +2,7 @@ import './App.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { UserProvider } from './hooks/useUser';  // Import the UserProvider
 import { UserDashboard } from './pages/DashboardPage';
-import AddUser, {  AddUserForm } from './pages/AddUserPage';
+import AddUser from './pages/AddUserPage';
 function App() {
   const router = createBrowserRouter([
     {

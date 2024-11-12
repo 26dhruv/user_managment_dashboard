@@ -1,9 +1,8 @@
-import { useContext } from "react"
 import { useQuery } from "../hooks/useQuery"
 
 export default function SearchBar(){
     
-    const {query,setQuery}=useQuery()
+    const {setQuery}=useQuery()
 
     return(
         <>
