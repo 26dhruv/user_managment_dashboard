@@ -2,13 +2,6 @@
 
 It is a user managment Dashboard with basic CRUDE operations using 'https://jsonplaceholder.typicode.com/users' API
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
 
 ### `npm start`
 
