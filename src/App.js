@@ -1,9 +1,8 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { UserProvider } from './api/UseUsers';  // Import the UserProvider
-import { UserDashboard } from './components/DashboardPage';
-import {  AddUserForm } from './components/AddUserPage';
-
+import { UserProvider } from './hooks/useUser';  // Import the UserProvider
+import { UserDashboard } from './pages/DashboardPage';
+import AddUser, {  AddUserForm } from './pages/AddUserPage';
 function App() {
   const router = createBrowserRouter([
     {
@@ -12,10 +11,10 @@ function App() {
     },
     {
       path: "/add-user",
-      element: <AddUserForm />,
+      element: <AddUser />,
     },
   ]);
-
+  
   return (
     <UserProvider>
       <div className="app-container">

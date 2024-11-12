@@ -1,14 +1,14 @@
-import { useState } from 'react';
 import Table from 'react-bootstrap/Table';
+import { Form } from 'react-bootstrap';
+import {  deleteUser, saveUser } from '../api/apiService';  // Import API functions
+import { useUsers } from '../hooks/useUser';  // Import the Context custom hook
+import {  useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import { useUsers } from '../api/UseUsers';  // Import the Context custom hook
-import {  deleteUser, saveUser } from '../api/apiService';  // Import API functions
-import { Form } from 'react-bootstrap';
-
+import { useQuery } from '../hooks/useQuery';
 
 // Handle user editing by setting the editing state
- const handleEdit = (id, setIsEditing) => {
+const handleEdit = (id, setIsEditing) => {
   setIsEditing(id);
 };
 //Handling save
@@ -39,24 +39,21 @@ import { Form } from 'react-bootstrap';
   }
 }
 
-
-export function UserDashboard() {
+export default function UserTable({children})
+{
+  const {query,setQuery}=useQuery()
   const { users, setUsers } = useUsers();  // Get global state and setter function
   const [isEditing, setIsEditing] = useState(null);
-  const [query,setQuery]=useState('')
-  return (
-    <>
-    {/* search Bar */}
-    <form className="form-inline my-2 my-lg-0">
-        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onChange={(e)=>{setQuery(e.target.value)}}></input>
-      </form>
-      <Link to='/add-user'>
+  return(
+<>
+      
+   {/* Navigation to AddUser Page */}
+   <Link to='/add-user'>
         <Button variant="primary" style={{ marginBottom: '10px' }}>
           Add User
         </Button>
       </Link>
-      
-      <Table bordered hover border={3}>
+  <Table bordered hover border={3}>
         <thead>
           <tr>
             <th>#</th>
@@ -136,6 +133,4 @@ export function UserDashboard() {
           ))}
         </tbody>
       </Table>
-    </>
-  );
-}
+      </>)}

@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUsers } from '../api/UseUsers';  // Import the custom hook
+import { useUsers } from '../hooks/useUser';  // Import the custom hook
 import { addUser } from '../api/apiService';  // Import handleAdd function from api.jsx
 
 

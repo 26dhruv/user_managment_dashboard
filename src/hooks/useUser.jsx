@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { fetchUsers } from './apiService';
+import { fetchUsers } from '../api/apiService';
 
 // Create a context for users
 const UserContext = createContext();
