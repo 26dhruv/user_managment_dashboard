@@ -2,9 +2,44 @@ import { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import { useUsers } from '../api/usercontext';  // Import the Context custom hook
-import { handleDelete, handleEdit, handleSave } from '../api/api';  // Import API functions
+import { useUsers } from '../api/UseUsers';  // Import the Context custom hook
+import {  deleteUser, saveUser } from '../api/apiService';  // Import API functions
 import { Form } from 'react-bootstrap';
+
+
+// Handle user editing by setting the editing state
+ const handleEdit = (id, setIsEditing) => {
+  setIsEditing(id);
+};
+//Handling save
+ const handleSave = (id, updatedUser, users, setUsers, setIsEditing) => {
+  console.log(setIsEditing)
+  return saveUser(id, updatedUser).then((response) => {
+      setUsers(users.map((user) => (user.id === id ? response.data : user)));
+      setIsEditing(null);
+      console.log('Edit response:', response.data);
+      alert('User Edited')
+    })
+    .catch((error) => console.error('Error editing user:', error));
+};
+//Call Delete Defination
+ const handleDelete = (id, users, setUsers) => {
+  const user = users.find((user) => user.id === id);
+  const warning = `Are you sure you want to delete ${user ? user.name : 'this user'}? \nEither Continue or Cancel.`;
+
+  if (window.confirm(warning)) {
+    
+      deleteUser(id).then(() => {
+        setUsers(users.filter((user) => user.id !== id));
+        alert(`User ${user.name} deleted successfully.`);
+      })
+      .catch((error) => console.error('Error deleting user:', error));
+  } else {
+    console.log("Deletion Cancelled by User");
+  }
+}
+
+
 export function UserTable() {
   const { users, setUsers } = useUsers();  // Get global state and setter function
   const [isEditing, setIsEditing] = useState(null);

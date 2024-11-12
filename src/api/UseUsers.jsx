@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { fetchUsers } from './apiService';
 
 // Create a context for users
 const UserContext = createContext();
@@ -24,9 +25,3 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// Function to fetch users
-const fetchUsers = () => {
-  return fetch('https://jsonplaceholder.typicode.com/users')
-    .then((response) => response.json())
-    .catch((error) => console.error('Error fetching users:', error));
-};

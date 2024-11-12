@@ -2,9 +2,21 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUsers } from '../api/usercontext';  // Import the custom hook
-import { handleAdd } from '../api/api';  // Import handleAdd function from api.jsx
+import { useUsers } from '../api/UseUsers';  // Import the custom hook
+import { addUser } from '../api/apiService';  // Import handleAdd function from api.jsx
 
+
+//Handle add
+const handleAdd = (newUser, users, setUsers, setNewUser, navigate) => {
+  return addUser(newUser)
+    .then((response) => {
+      setUsers((prevUsers) => [...prevUsers, response.data]);
+      setNewUser({ name: '', username: '', email: '' });
+      alert('User added')
+      navigate('/');
+    })
+    .catch((error) => console.error('Error adding user:', error));
+};
 export function AddUser() {
   const { users, setUsers } = useUsers();  // Get global state and setter function
   const [newUser, setNewUser] = useState({ name: '', username: '', email: '' });
