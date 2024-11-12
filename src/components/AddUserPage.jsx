@@ -17,7 +17,7 @@ const handleAdd = (newUser, users, setUsers, setNewUser, navigate) => {
     })
     .catch((error) => console.error('Error adding user:', error));
 };
-export function AddUser() {
+export function AddUserForm() {
   const { users, setUsers } = useUsers();  // Get global state and setter function
   const [newUser, setNewUser] = useState({ name: '', username: '', email: '' });
   const navigate = useNavigate();
@@ -49,10 +49,10 @@ export function AddUser() {
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group>
+        <Form.Group controlId="formBasicEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control
-            type="text"
+            type="email"
             name="email"
             value={newUser.email}
             onChange={handleInputChange}

@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Fetch users initially if needed, can be left empty if you're adding them directly
+    // Fetch users initially 
     fetchUsers().then(setUsers);
   }, []);
 

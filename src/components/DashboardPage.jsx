@@ -22,7 +22,7 @@ import { Form } from 'react-bootstrap';
     })
     .catch((error) => console.error('Error editing user:', error));
 };
-//Call Delete Defination
+//Delete handling 
  const handleDelete = (id, users, setUsers) => {
   const user = users.find((user) => user.id === id);
   const warning = `Are you sure you want to delete ${user ? user.name : 'this user'}? \nEither Continue or Cancel.`;
@@ -40,7 +40,7 @@ import { Form } from 'react-bootstrap';
 }
 
 
-export function UserTable() {
+export function UserDashboard() {
   const { users, setUsers } = useUsers();  // Get global state and setter function
   const [isEditing, setIsEditing] = useState(null);
   const [query,setQuery]=useState('')
