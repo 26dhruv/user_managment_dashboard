@@ -6,9 +6,20 @@ import { useUsers } from '../hooks/useUser';  // Import the custom hook
 import { addUser } from '../api/apiService';  // Import handleAdd function from api.jsx
 
 
-//Handle add
-const handleAdd = (newUser, users, setUsers, setNewUser, navigate) => {
-  return addUser(newUser)
+
+export function AddUserForm() {
+  const {  setUsers } = useUsers();  // Get global state and setter function
+  const [newUser, setNewUser] = useState({ name: '', username: '', email: '' });
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewUser((prev) => ({ ...prev, [name]: value }));
+  };
+
+  //Handle add
+  const handleAdd = (newUser, setUsers, setNewUser, navigate) => {
+    return addUser(newUser)
     .then((response) => {
       setUsers((prevUsers) => [...prevUsers, response.data]);
       setNewUser({ name: '', username: '', email: '' });
@@ -17,15 +28,6 @@ const handleAdd = (newUser, users, setUsers, setNewUser, navigate) => {
     })
     .catch((error) => console.error('Error adding user:', error));
 };
-export function AddUserForm() {
-  const { users, setUsers } = useUsers();  // Get global state and setter function
-  const [newUser, setNewUser] = useState({ name: '', username: '', email: '' });
-  const navigate = useNavigate();
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewUser((prev) => ({ ...prev, [name]: value }));
-  };
 
   return (
     <>
@@ -60,7 +62,7 @@ export function AddUserForm() {
         </Form.Group>
         <Button
           variant="primary"
-          onClick={() => handleAdd(newUser, users, setUsers, setNewUser, navigate)}
+          onClick={() => handleAdd(newUser, setUsers, setNewUser, navigate)}
         >
           Add
         </Button>

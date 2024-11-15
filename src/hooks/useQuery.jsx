@@ -1,9 +1,9 @@
 import { createContext, useContext, useState } from 'react';
 
-// Create a context for users
+// Create a context for query
 const SearchQueryContext = createContext();
 
-// Custom hook to use the UserContext
+// Custom hook to use the queryContext
 export const useQuery = () => {
   return useContext(SearchQueryContext);
 };

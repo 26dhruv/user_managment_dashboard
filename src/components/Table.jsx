@@ -7,13 +7,20 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../hooks/useQuery';
 
+
+
+export default function UserTable()
+{
+  const {query}=useQuery()
+  const { users, setUsers } = useUsers();  // Get global state and setter function
+  const [isEditing, setIsEditing] = useState(null);
+//CRUDE HANDLING 
 // Handle user editing by setting the editing state
-const handleEdit = (id, setIsEditing) => {
+const handleEdit = (id) => {
   setIsEditing(id);
 };
 //Handling save
- const handleSave = (id, updatedUser, users, setUsers, setIsEditing) => {
-  console.log(setIsEditing)
+ const handleSave = (id, updatedUser) => {
   return saveUser(id, updatedUser).then((response) => {
       setUsers(users.map((user) => (user.id === id ? response.data : user)));
       setIsEditing(null);
@@ -23,7 +30,7 @@ const handleEdit = (id, setIsEditing) => {
     .catch((error) => console.error('Error editing user:', error));
 };
 //Delete handling 
- const handleDelete = (id, users, setUsers) => {
+const handleDelete = (id) => {
   const user = users.find((user) => user.id === id);
   const warning = `Are you sure you want to delete ${user ? user.name : 'this user'}? \nEither Continue or Cancel.`;
 
@@ -39,11 +46,7 @@ const handleEdit = (id, setIsEditing) => {
   }
 }
 
-export default function UserTable({children})
-{
-  const {query}=useQuery()
-  const { users, setUsers } = useUsers();  // Get global state and setter function
-  const [isEditing, setIsEditing] = useState(null);
+
   return(
 <>
       
@@ -116,7 +119,7 @@ export default function UserTable({children})
               </td>
               <td>
                 {isEditing === user.id ? (
-                  <Button variant="outline-success" onClick={() => handleSave(user.id, user, users, setUsers, setIsEditing)}>
+                  <Button variant="outline-success" onClick={() => handleSave(user.id, user)}>
                     Save
                   </Button>
                 ) : (
@@ -125,7 +128,7 @@ export default function UserTable({children})
                   </Button>
                 )}
                 {' '}
-                <Button variant="danger" onClick={() => handleDelete(user.id, users, setUsers)}>
+                <Button variant="danger" onClick={() => handleDelete(user.id)}>
                   Delete
                 </Button>
               </td>
